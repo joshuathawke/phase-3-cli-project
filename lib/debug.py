@@ -66,7 +66,7 @@ if __name__ == '__main__':
     honey_salt = Restaurant(name='Honey Salt', city_id=5)
     gritz = Restaurant(name='Gritz Cafe', city_id=5)
     flower_child = Restaurant(name='Flower Child', city_id=5)
-    session.query(Restaurant).filter(Restaurant.name.in_(['Ben & Jacks Steakhouse', 'La Grande Boucherie', 'Numero 28 Pizzeria','Bagels & Schmear', 'Perch', 'Amor y Tacos', 'Lazy Dog', 'Geezers', 'Zazie', 'Spruce', 'Rich Table', 'Hillstone', 'FIG', 'Charleston Grill', 'Stellas', 'Husk', 'Black Tap', 'Honey Salt', 'Gritz Cafe', 'Flower Child'])).all()
+    session.add_all([ben_and_jacks_steakhouse, la_grande_boucherie, numero_28_pizzeria, bagels_and_schmear, perch, amor, lazy_dog, geezers, zazie, spruce, rich_table, hillstone, fig, charleston_grill, stellas, husk, black_tap, honey_salt, gritz, flower_child])
     session.commit()
 
 
