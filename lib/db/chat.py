@@ -2,6 +2,10 @@ import time # we're gonna need this for letters to slide slowly (time.sleep -> 0
 import shutil # get the size of the terminal
 import os # need for interacting with os such as clearing terminal screen "os.screen(clear)"
 from nltk.chat.util import Chat, reflections # It provides pre-programmed responses to user inputs based on regular expression defined in the intents() method.
+from ..debug import session, City
+import sqlite3
+conn = sqlite3.connect("test.db")
+cursor = conn.cursor()
 
 class ChatBot:
     def __init__(self):
@@ -11,7 +15,10 @@ class ChatBot:
         response = self.chatbot.respond(user_input)
         return response
 
-
+    def get_user_city(self, user_input):
+        query = session.query(City).filter(City.name.like('%{user_input}%').all())
+        
+    
     def intents(self):
         return [
         # Greetings
@@ -55,12 +62,12 @@ def format_response(response):
 ### Clear terminal and show front page ###
 os.system('clear') # clear the terminal when run the program
 print("\n".join([line.upper().center(shutil.get_terminal_size().columns) for line in [
-                 "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
-                 "Welcome to ChatBot!",
-                 "ChatBot is a simple chat program that can respond to a few basic phrases.",
-                 "To start chatting, simply enter your message below and hit enter.",
-                 "Type 'quit' at any time to exit the program.\n"]
-                 ]))
+                "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+                "Welcome to ChatBot!",
+                "ChatBot is a simple chat program that can respond to a few basic phrases.",
+                "To start chatting, simply enter your message below and hit enter.",
+                "Type 'quit' at any time to exit the program.\n"]
+                ]))
 
 #Chat loop
 while True:
