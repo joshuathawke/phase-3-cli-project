@@ -2,11 +2,6 @@ import time # we're gonna need this for letters to slide slowly (time.sleep -> 0
 import shutil # get the size of the terminal
 import os # need for interacting with os such as clearing terminal screen "os.screen(clear)"
 from nltk.chat.util import Chat, reflections # It provides pre-programmed responses to user inputs based on regular expression defined in the intents() method.
-from ..debug import session, City
-import sqlite3
-conn = sqlite3.connect("test.db")
-cursor = conn.cursor()
-
 
 import re
 from sqlalchemy import create_engine
@@ -40,18 +35,15 @@ class ChatBot:
             else:
                 return "Category not found"
             if items:
-                item_names = '\n'.join(list(set([i.name for i in items])))
-                response = f"{category.capitalize()} in {city_name}: \n\n{item_names}"
+                item_names = '\n\t\t\t\t\t\t\t'.join(list(set([i.name for i in items])))
+                response = f"{category.capitalize()} in {city_name}: \n\n\t\t\t\t\t\t\t{item_names}"
             else:
                 response = f"No {category} found in {city_name}"
         else:
             response = self.chatbot.respond(user_input)
 
         return f"{response}"
-
-    def get_user_city(self, user_input):
-        query = session.query(City).filter(City.name.like('%{user_input}%').all())
-        
+   
     
     def intents(self):
         return [
