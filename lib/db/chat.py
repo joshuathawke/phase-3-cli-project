@@ -3,19 +3,53 @@ import shutil # get the size of the terminal
 import os # need for interacting with os such as clearing terminal screen "os.screen(clear)"
 from nltk.chat.util import Chat, reflections # It provides pre-programmed responses to user inputs based on regular expression defined in the intents() method.
 
+
+import re
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from models import Hotel, City, Restaurant, Attraction
+
+engine = create_engine('sqlite:///test.db')
+Session = sessionmaker(bind=engine)
+session = Session()
+
 class ChatBot:
     def __init__(self):
         self.chatbot = Chat(self.intents())
 
     def respond(self, user_input):
-        response = self.chatbot.respond(user_input)
-        return response
+        match = re.match(r'what (hotels|restaurants|tourist attractions) are good in ([a-zA-Z ]+)', user_input)
+        if match:
+            category = match.group(1)
+            city_name = match.group(2)
+            Session = sessionmaker(bind=engine)
+            session = Session()
+            city = session.query(City).filter_by(name=city_name).first()
+            if not city:
+                return "City not found"
+            if category == "hotels":
+                items = city.hotels
+            elif category == "restaurants":
+                items = city.restaurants
+            elif category == "tourist attractions":
+                items = city.attractions
+            else:
+                return "Category not found"
+            if items:
+                item_names = '\n'.join(list(set([i.name for i in items])))
+                response = f"{category.capitalize()} in {city_name}: \n\n{item_names}"
+            else:
+                response = f"No {category} found in {city_name}"
+        else:
+            response = self.chatbot.respond(user_input)
+
+        return f"{response}"
 
 
     def intents(self):
         return [
         # Greetings
-        (r'hi|hello|hey|howdy|hey there', ['Hello!', 'Hi!', 'Hey there!', 'Howdy!']),
+        (r'hi|hello|hey|hey there', ['Hello!', 'Hi!', 'Hey there!', 'Howdy!']),
         (r'what\'s up|sup|what\'s new', ['Not much, just chatting with you!', 'Just hanging out, how about you?', 'Nothing new, how about you?']),
         (r'how are you|how\'s it going|how have you been', ['I\'m doing well, thanks for asking!', 'I\'m good, how about you?', 'I\'ve been doing alright, thanks for asking!']),
         
@@ -25,6 +59,7 @@ class ChatBot:
 
         # Gratitude
         (r'thank you|thanks', ['You\'re welcome!', 'No problem!', 'Anytime!', 'Glad to help!']),
+        (r'good thanks|good thanks for asking|I am good|I am good thanks for asking', ['Glad to hear that how can i assist you today?']),
 
         # Personal information
         (r'what is your name|who are you', ['My name is ChatBot!', 'I\'m an AI chatbot!', 'I\'m ChatBot!', 'You can call me ChatBot!']),
@@ -35,6 +70,7 @@ class ChatBot:
 
         ################################################ Personal questions #########################################################
         (r'Have you heard about David Ritchey', ['Yes I know David Ritchey some people also call him DJ What whould you like to know about him?']),
+        (r'nice', ['lol its nice for now :)']),
         (r'Can i ask you something', ['Of course! I\m here to help. What would you like to ask?']),  
         (r'is dj a bot', ['Yes, David Ritchey is  a BOT developed by Antonio Reid  as a CapStone Project in 2018']),
         (r'what is andrews dogs name', ['Its TUUURRRBOOOOOOOOOOOOO']),
@@ -47,6 +83,7 @@ class ChatBot:
     ]
 
 chatbot = ChatBot()
+
 
 ## Display the response more clearly and readable
 def format_response(response):
@@ -64,7 +101,7 @@ print("\n".join([line.upper().center(shutil.get_terminal_size().columns) for lin
 
 #Chat loop
 while True:
-    user_input = input("Human: ")
+    user_input = input("\t\t\t\t\033[1;32mHuman: \033[0m")
     exit = user_input.lower() == 'quit'
     
     if  exit:
@@ -75,10 +112,11 @@ while True:
         print()
         break
 
-    response ="\nOver-Lord: " + chatbot.respond(user_input) + "\n"
+    response ="\n\t\t\t\t\033[1;36mOver-Lord:\033[0m " + chatbot.respond(user_input) + "\n"
     for letter in response:
         print(letter, end='', flush=True)
         time.sleep(0.01)
     print()
+
 
 
