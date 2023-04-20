@@ -21,22 +21,27 @@ if __name__ == '__main__':
     session.add_all([nyc, la, sf, chs, lv])
     session.commit()
 
-
-    ritz = Hotel(name='Ritz', city_id=1)            #NY
-    plaza = Hotel(name='The Plaza', city_id=1)      #NY
-    regis = Hotel(name='The St. Regis', city_id=1)  #NY
-    hilton = Hotel(name='Hilton', city_id=2)        #LA
-    hyatt = Hotel(name='Hyatt', city_id=2)          #LA
-    conrad = Hotel(name='Conrad', city_id=2)        #LA
-    marriott = Hotel(name='Marriott', city_id=3)    #SF
-    sheraton = Hotel(name='Sheraton', city_id=3)    #SF
-    fairmont = Hotel(name='Fairmont', city_id=3)    #SF
-    belmond = Hotel(name='Belmond', city_id=4)      #Charles
-    tides = Hotel(name='Tides', city_id=4)          #Charles
-    wentworth = Hotel(name= 'The Wentworth', city_id=4) #Charles
-    mgm = Hotel(name= 'MGM Grand', city_id=5)        #Vegas
-    wynn = Hotel(name= 'Wynn', city_id=5)            #Vegas
-    veniant = Hotel(name= 'The Veniant', city_id=5)  #Vegas
+    # Hotels
+    # New York
+    ritz = Hotel(name='Ritz', city_id=1)            
+    plaza = Hotel(name='The Plaza', city_id=1)      
+    regis = Hotel(name='The St. Regis', city_id=1)
+    # Los Angeles
+    hilton = Hotel(name='Hilton', city_id=2)        
+    hyatt = Hotel(name='Hyatt', city_id=2)          
+    conrad = Hotel(name='Conrad', city_id=2)  
+    # San Francisco
+    marriott = Hotel(name='Marriott', city_id=3)    
+    sheraton = Hotel(name='Sheraton', city_id=3)    
+    fairmont = Hotel(name='Fairmont', city_id=3) 
+    # Charleston   
+    belmond = Hotel(name='Belmond', city_id=4)      
+    tides = Hotel(name='Tides', city_id=4)          
+    wentworth = Hotel(name= 'The Wentworth', city_id=4) 
+    # Las Vegas
+    mgm = Hotel(name= 'MGM Grand', city_id=5)        
+    wynn = Hotel(name= 'Wynn', city_id=5)            
+    veniant = Hotel(name= 'The Veniant', city_id=5)  
     session.add_all([ritz, plaza, regis, hilton, hyatt,conrad, marriott, sheraton,fairmont, belmond, tides,wentworth, mgm, wynn,veniant])
     session.commit()
 
@@ -66,7 +71,7 @@ if __name__ == '__main__':
     honey_salt = Restaurant(name='Honey Salt', city_id=5)
     gritz = Restaurant(name='Gritz Cafe', city_id=5)
     flower_child = Restaurant(name='Flower Child', city_id=5)
-    session.add_all([ben_and_jacks_steakhouse, la_grande_boucherie, numero_28_pizzeria, bagels_and_schmear, perch, amor, lazy_dog, geezers, zazie, spruce, rich_table, hillstone, fig, charleston_grill, stellas, husk, black_tap, honey_salt, gritz, flower_child])
+    session.add_all([ben_and_jacks_steakhouse, la_grande_boucherie, numero_28_pizzeria, bagels_and_schmear, perch, amor, lazy_dog, geezers, zazie, spruce, rich_table, hillstone, fig, charleston_grill, stellas, husk, black_tap, honey_salt, gritz, flower_child])    
     session.commit()
 
 
